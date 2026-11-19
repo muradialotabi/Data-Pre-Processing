@@ -1,42 +1,93 @@
-This code is designed for handling the VeReMi Datasets, specifically for data preprocessing of JSON files and label mapping. 
-We have selected only the position attacks for analysis.
+# Data Pre-Processing for VeReMi (Version 2)
 
-For more details about the dataset, please visit: https://github.com/josephkamel/F2MD
+Pre-processing code for the VeReMi dataset (JSON message logs → cleaned CSV with labels). It is used by the paper:
 
-To download the data, use the following link: https://mega.nz/folder/z0pnGA4a#WFEUISyS5_maabhcEI7HQA
+> **Privacy-Preserving Misbehavior Detection in Vehicular Ad Hoc Networks Using Horizontal Federated Learning: An Empirical Ablation Study of Data Heterogeneity, Aggregation Strategies, and Client Dropout**
+> Muradi Al-Otaibi and Muhamad Felemban, KFUPM.
 
+🔗 **Main repository (federated learning experiments):** [`<link-to-main-repo>`](https://github.com/muradialotabi/<main-repo-name>)
 
+---
 
-VeReMi Dataset Structure:
+## Overview
 
-The VeReMi dataset is organized into several subsets representing different simulation scenarios. Each subset includes a ground truth (GT) file and multiple message log files containing received message data.
+This code handles the VeReMi datasets, specifically:
 
-Each message log file represents a log of messages received by a vehicle at specific timestamps. These files record what each vehicle received during the simulation.
+- Pre-processing of the raw JSON files (Type-3 BSM data)
+- Label mapping (receiver IDs → attack labels)
 
-The ground truth file contains information about all transmitted messages during a simulation and identifies which messages were sent by attackers. The ground truth includes all sending events from a single simulation, while the message logs contain the corresponding reception events.
+Only the **position attacks** are selected for analysis.
 
-Each entry in the message log files contains the following information:
-	•	reception timestamp
-	•	claimed transmission time
-	•	claimed sender ID
-	•	simulation-wide unique message ID
-	•	position vector
-	•	speed vector
-	•	received signal strength indicator (RSSI)
-	•	position noise vector
-	•	speed noise vector
-	•	module ID
+## Files
 
-The module ID originates from the VEINS simulation framework and is used to identify the simulated modules, such as vehicle components, base stations, or the SUMO connector.
+| File | Description |
+|---|---|
+| `Data pro-cessing.py` | Loads the JSON logs, cleans the data, and saves a CSV |
+| `label mapping.py` | Maps messages to their ground-truth attack labels |
 
-In addition, the ground truth file is updated whenever a message is transmitted by any vehicle. This file includes:
-	•	transmission time
-	•	sender ID
-	•	attacker type
-	•	message ID
-	•	actual position vector
-	•	actual speed vector
+## Data
 
-The attacker type is set to 0 for legitimate vehicles, while other values represent different attacker behaviors. Typically, there may be more than one attacker in a simulation scenario.
+- Dataset details (F2MD framework): <https://github.com/josephkamel/F2MD>
+- Raw data download: <https://mega.nz/folder/z0pnGA4a#WFEUISyS5_maabhcEI7HQA>
 
-Each subset therefore provides both the transmission ground truth data and the corresponding received message logs, allowing researchers to analyze vehicle communication behavior and detect malicious messages
+## VeReMi Dataset Structure
+
+The dataset is organized into subsets representing different simulation scenarios. Each subset includes a **ground truth (GT)** file and multiple **message log** files.
+
+**Message logs** record what each vehicle received. Each entry contains:
+
+- reception timestamp
+- claimed transmission time
+- claimed sender ID
+- simulation-wide unique message ID
+- position vector
+- speed vector
+- received signal strength indicator (RSSI)
+- position noise vector
+- speed noise vector
+- module ID (from the VEINS simulation framework)
+
+**Ground truth** records every transmitted message and identifies attackers. Each entry contains:
+
+- transmission time
+- sender ID
+- attacker type (`0` = legitimate vehicle, other values = attacker behaviors)
+- message ID
+- actual position vector
+- actual speed vector
+
+A simulation may contain more than one attacker.
+
+## Usage
+
+```bash
+git clone https://github.com/muradialotabi/Data-Pre-Processing.git
+cd Data-Pre-Processing
+pip install pandas scikit-learn
+
+# 1. Download the raw VeReMi data (see the Data section) and set the path inside the scripts
+# 2. Run the pre-processing
+python "Data pro-cessing.py"
+# 3. Run the label mapping
+python "label mapping.py"
+```
+
+> Edit the commands above if the scripts take different arguments or must be run in a different order.
+
+## Ready-Made Data
+
+The already partitioned data (IID and quantity-skew non-IID) used in the paper is available here:
+📦 [Google Drive](https://drive.google.com/drive/folders/17BUsj6rkDRB3EgGo840wUHDqs6MHhUge)
+
+## Citation
+
+If you use any part of this repository (code, data, or results) in your research, please cite the associated paper:
+
+```bibtex
+@article{alotaibi2026hfl_vanet,
+  title  = {Privacy-Preserving Misbehavior Detection in Vehicular Ad Hoc Networks Using Horizontal Federated Learning: An Empirical Ablation Study of Data Heterogeneity, Aggregation Strategies, and Client Dropout},
+  author = {Al-Otaibi, Muradi and Felemban, Muhamad},
+  year   = {2026},
+  note   = {Submitted for publication}
+}
+```
