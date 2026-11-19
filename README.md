@@ -3,7 +3,7 @@
 Pre-processing code for the VeReMi dataset (JSON message logs → cleaned CSV with labels). It is used by the paper:
 
 > **Privacy-Preserving Misbehavior Detection in Vehicular Ad Hoc Networks Using Horizontal Federated Learning: An Empirical Ablation Study of Data Heterogeneity, Aggregation Strategies, and Client Dropout**
-> Muradi Al-Otaibi and Muhamad Felemban, KFUPM.
+> Muradi Al-Otaibi KFUPM.
 
 🔗 **Main repository (federated learning experiments):** [ https://github.com/muradialotabi/Privacy-Preserving-Misbehavior-Detection-in-VANETs-Using-Horizontal-Federated-Learning/tree/main ](https://github.com/muradialotabi/<main-repo-name>)
 
